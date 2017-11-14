@@ -10,13 +10,14 @@ import (
 
 func HandleDialogflowRequest(w http.ResponseWriter, r *http.Request) {
 	if r.Method == "POST" {
-		body, _ := ioutil.ReadAll(r.Body)
-		fmt.Printf("Unable to decode JSON: %s", body)
-		r.Body.Close()
+		//body, _ := ioutil.ReadAll(r.Body)
+		//fmt.Printf("Unable to decode JSON: %s", body)
+		//r.Body.Close()
 
 		df := Dialogflow{}
 		err := json.NewDecoder(r.Body).Decode(&df)
 		if err != nil {
+			fmt.Println("Error decoding")
 			http.Error(w, http.StatusText(http.StatusBadRequest), http.StatusBadRequest)
 			return
 		}
@@ -24,6 +25,7 @@ func HandleDialogflowRequest(w http.ResponseWriter, r *http.Request) {
 		// TODO find exchange rate
 		err = df.Validate()
 		if err != nil {
+			fmt.Println("Erorr validating")
 			http.Error(w, err.Error(), http.StatusBadRequest)
 			return
 		}
