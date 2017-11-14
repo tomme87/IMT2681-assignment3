@@ -59,8 +59,9 @@ func HandleDialogflowRequest(w http.ResponseWriter, r *http.Request) {
 			p.BaseCurrency, p.TargetCurrency, string(rate))
 
 		dfr := DialogFlowResponse{
-			Speech: "",
+			Speech: text,
 			DisplayText: text,
+			Source: "exchange-rate-api",
 		}
 		dfr.Data.Slack.Text = text
 
