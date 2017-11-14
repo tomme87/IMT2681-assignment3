@@ -6,7 +6,6 @@ import (
 	"fmt"
 	"io/ioutil"
 	"bytes"
-	"strconv"
 )
 
 func HandleDialogflowRequest(w http.ResponseWriter, r *http.Request) {
