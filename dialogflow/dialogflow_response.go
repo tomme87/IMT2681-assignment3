@@ -5,7 +5,7 @@ type DialogFlowResponse struct {
 	DisplayText string `json:"displayText"`
 	Data struct{
 		Slack struct{
-			Text string `json:text`
+			Text string `json:"text"`
 		} `json:"slack"`
 	} `json:"data"`
 	//ContextOut []string
