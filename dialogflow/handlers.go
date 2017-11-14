@@ -59,6 +59,8 @@ func HandleDialogflowRequest(w http.ResponseWriter, r *http.Request) {
 			Speech: "",
 			DisplayText: text,
 		}
+		dfr.Data.Slack.Text = text
+		
 
 		w.Header().Set("Content-Type", "application/json")
 		err = json.NewEncoder(w).Encode(dfr)
