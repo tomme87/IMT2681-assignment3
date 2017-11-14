@@ -10,13 +10,14 @@ import (
 
 func HandleDialogflowRequest(w http.ResponseWriter, r *http.Request) {
 	if r.Method == "POST" {
+		body, _ := ioutil.ReadAll(r.Body)
+		fmt.Printf("Unable to decode JSON: %s", body)
+		r.Body.Close()
+
 		df := Dialogflow{}
 		err := json.NewDecoder(r.Body).Decode(&df)
 		if err != nil {
 			http.Error(w, http.StatusText(http.StatusBadRequest), http.StatusBadRequest)
-			body, _ := ioutil.ReadAll(r.Body)
-			fmt.Printf("Unable to decode JSON: %s", body)
-			r.Body.Close()
 			return
 		}
 
@@ -60,7 +61,7 @@ func HandleDialogflowRequest(w http.ResponseWriter, r *http.Request) {
 			DisplayText: text,
 		}
 		dfr.Data.Slack.Text = text
-		
+
 
 		w.Header().Set("Content-Type", "application/json")
 		err = json.NewEncoder(w).Encode(dfr)
