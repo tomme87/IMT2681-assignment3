@@ -5,7 +5,7 @@ import "errors"
 type Dialogflow struct {
 	Result struct {
 		Parameters struct {
-			BaseCurrency string
+			BaseCurrency   string
 			TargetCurrency string
 		}
 	}

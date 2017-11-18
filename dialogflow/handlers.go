@@ -1,11 +1,12 @@
 package dialogflow
 
 import (
-	"net/http"
+	"bytes"
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
-	"bytes"
+	"net/http"
+	"os"
 )
 
 func HandleDialogflowRequest(w http.ResponseWriter, r *http.Request) {
@@ -32,7 +33,7 @@ func HandleDialogflowRequest(w http.ResponseWriter, r *http.Request) {
 		p := df.Result.Parameters
 
 		/*
-		LatestPayload struct used for storing /average and /latest request payloads
+			LatestPayload struct used for storing /average and /latest request payloads
 		*/
 		type LatestPayload struct {
 			BaseCurrency   string `json:"baseCurrency"`
@@ -45,7 +46,13 @@ func HandleDialogflowRequest(w http.ResponseWriter, r *http.Request) {
 
 		jsonStr, _ := json.Marshal(lp)
 
-		res, err := http.Post("https://howling-skull-56836.herokuapp.com/exchange/latest",
+		// Get URL from env variable.
+		latestURL := os.Getenv("LATEST_URL")
+		if latestURL == "" {
+			latestURL = "https://howling-skull-56836.herokuapp.com/exchange/latest"
+		}
+
+		res, err := http.Post(latestURL,
 			"application/json", bytes.NewBuffer(jsonStr))
 		if err != nil {
 			return
@@ -54,17 +61,15 @@ func HandleDialogflowRequest(w http.ResponseWriter, r *http.Request) {
 		rate, _ := ioutil.ReadAll(res.Body)
 		res.Body.Close()
 
-
 		text := fmt.Sprintf("Latest rate between %s and  %s  is %s",
 			p.BaseCurrency, p.TargetCurrency, string(rate))
 
 		dfr := DialogFlowResponse{
-			Speech: text,
+			Speech:      text,
 			DisplayText: text,
-			Source: "exchange-rate-api",
+			Source:      "exchange-rate-api",
 		}
 		dfr.Data.Slack.Text = text
-
 
 		w.Header().Set("Content-Type", "application/json")
 		err = json.NewEncoder(w).Encode(dfr)

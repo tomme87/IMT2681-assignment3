@@ -1,8 +1,8 @@
 package main
 
 import (
-	"net/http"
 	"github.com/tomme87/IMT2681-assignment3/dialogflow"
+	"net/http"
 	"os"
 )
 
@@ -12,5 +12,3 @@ func main() {
 	http.HandleFunc("/dialogflow", dialogflow.HandleDialogflowRequest)
 	http.ListenAndServe(":"+port, nil)
 }
-
-
