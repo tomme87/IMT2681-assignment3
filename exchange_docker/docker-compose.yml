@@ -1,0 +1,33 @@
+version: '3'
+
+services:
+  api:
+    env_file:
+      - ./api/.env
+    build: ./api
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+  monitor:
+    env_file:
+      - ./monitor/.env
+    build: ./monitor
+    depends_on:
+      - db
+  bot:
+    env_file:
+      - ./bot/.env
+    build: ./bot
+    ports:
+      - "8081:8081"
+    depends_on:
+      - api
+  db:
+    image: "mongo:latest"
+    volumes:
+      - db-data:/data/db
+
+volumes:
+  db-data:
+
