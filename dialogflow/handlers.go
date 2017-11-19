@@ -49,7 +49,7 @@ func HandleDialogflowRequest(w http.ResponseWriter, r *http.Request) {
 		// Get URL from env variable.
 		latestURL := os.Getenv("LATEST_URL")
 		if latestURL == "" {
-			latestURL = "https://howling-skull-56836.herokuapp.com/exchange/latest"
+			latestURL = "https://whispering-savannah-13838.herokuapp.com/exchange/latest"
 		}
 
 		res, err := http.Post(latestURL,
@@ -61,7 +61,7 @@ func HandleDialogflowRequest(w http.ResponseWriter, r *http.Request) {
 		rate, _ := ioutil.ReadAll(res.Body)
 		res.Body.Close()
 
-		text := fmt.Sprintf("Latest rate between %s and  %s  is %s",
+		text := fmt.Sprintf("Latest rate between %s and %s is %s",
 			p.BaseCurrency, p.TargetCurrency, string(rate))
 
 		dfr := DialogFlowResponse{
