@@ -48,3 +48,16 @@ MGO_URL=mongodb://db
 docker-compose up -d
 ```
 In exchange_docker directory. (`docker-compose down` to stop)
+
+### Test your environment
+There is two test files "testApi.sh" and "testBot.sh". The first one runs a POST against the api docker and the second runs a POST against the bot docker and outputs the answer.
+
+For testApi.sh you should see someting like
+```
+9.7163
+```
+
+For testBot.sh you should see something like
+```
+{"speech":"Latest rate between SEK and  NOK  is 0.9770723","displayText":"Latest rate between SEK and  NOK  is 0.9770723","data":{"slack":{"text":"Latest rate between SEK and  NOK  is 0.9770723"}},"source":"exchange-rate-api"}
+```
