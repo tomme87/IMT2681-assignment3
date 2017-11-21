@@ -1,6 +1,8 @@
 # Cloud Technologies - Assignement 3
 This is a school assignment.
 
+[Why we chose this design](DesignDiscussion.pdf)
+
 # Install (without docker)
 You need to have the code running for assignment 2.
 
