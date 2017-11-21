@@ -22,6 +22,8 @@ webapp
 ```
 
 # Docker
+This contains docker files to run "self contained" including for files from assignment 2.
+
 We need a .env file in directory api, bot and monitor.
 
 example for api:
